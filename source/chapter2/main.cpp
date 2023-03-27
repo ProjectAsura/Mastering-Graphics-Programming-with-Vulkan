@@ -31,7 +31,7 @@
 
 ///////////////////////////////////////
 
-static const u16 INVALID_TEXTURE_INDEX = ~0u;
+static const u16 INVALID_TEXTURE_INDEX = u16(~0u);
 
 raptor::BufferHandle                    scene_cb;
 
@@ -561,7 +561,7 @@ int main( int argc, char** argv ) {
         // Blend
         pipeline_creation.blend_state.add_blend_state().set_color( VK_BLEND_FACTOR_SRC_ALPHA, VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA, VK_BLEND_OP_ADD );
 
-        pipeline_creation.shaders.set_name( "main" ).add_stage( vert_code.data, vert_code.size, VK_SHADER_STAGE_VERTEX_BIT ).add_stage( frag_code.data, frag_code.size, VK_SHADER_STAGE_FRAGMENT_BIT );
+        pipeline_creation.shaders.set_name( "main" ).add_stage( vert_code.data, u32(vert_code.size), VK_SHADER_STAGE_VERTEX_BIT ).add_stage( frag_code.data, u32(frag_code.size), VK_SHADER_STAGE_FRAGMENT_BIT );
 
         // Constant buffer
         BufferCreation buffer_creation;
@@ -699,7 +699,7 @@ int main( int argc, char** argv ) {
         begin_frame_tick = current_tick;
 
         input.update( delta_time );
-        game_camera.update( &input, window.width * 1.f, window.height * 1.f, delta_time );
+        game_camera.update( &input, window.width, window.height, delta_time );
         window.center_mouse( game_camera.mouse_dragging );
 
         if ( ImGui::Begin( "Raptor ImGui" ) ) {
@@ -755,7 +755,7 @@ int main( int argc, char** argv ) {
             raptor::CommandBuffer* gpu_commands = gpu.get_command_buffer( QueueType::Graphics, true );
             gpu_commands->push_marker( "Frame" );
 
-            gpu_commands->clear( 0.3, 0.3, 0.3, 1 );
+            gpu_commands->clear( 0.3f, 0.3f, 0.3f, 1.0f );
             gpu_commands->clear_depth_stencil( 1.0f, 0 );
             gpu_commands->bind_pass( gpu.get_swapchain_pass() );
             gpu_commands->set_scissor( nullptr );

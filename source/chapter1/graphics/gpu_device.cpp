@@ -973,7 +973,7 @@ void dump_shader_code( StringBuffer& temp_string_buffer, cstring code, VkShaderS
         }
 
         temp_string_buffer.clear();
-        char* line = temp_string_buffer.append_use_substring( current_code, 0, ( end_of_line - current_code ) );
+        char* line = temp_string_buffer.append_use_substring( current_code, 0u, u32( end_of_line - current_code ) );
         rprint( "%u: %s", line_index++, line );
 
         current_code = end_of_line;

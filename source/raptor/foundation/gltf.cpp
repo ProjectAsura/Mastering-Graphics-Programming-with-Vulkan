@@ -98,7 +98,7 @@ static void try_load_int_array( json& json_data, cstring key, u32& count, i32** 
 
     json json_array = json_data.at( key );
 
-    count = json_array.size();
+    count = u32(json_array.size());
 
     i32* values = ( i32* )allocate_and_zero( allocator, sizeof( i32 ) * count );
 
@@ -119,7 +119,7 @@ static void try_load_float_array( json& json_data, cstring key, u32& count, floa
 
     json json_array = json_data.at( key );
 
-    count = json_array.size();
+    count = u32(json_array.size());
 
     float* values = ( float* )allocate_and_zero( allocator, sizeof( float ) * count );
 
@@ -148,7 +148,7 @@ static void load_scenes( json& json_data, glTF::glTF& gltf_data, Allocator* allo
 
     sizet scene_count = scenes.size();
     gltf_data.scenes = ( glTF::Scene* )allocate_and_zero( allocator, sizeof( glTF::Scene ) * scene_count );
-    gltf_data.scenes_count = scene_count;
+    gltf_data.scenes_count = u32(scene_count);
 
     for ( sizet i = 0; i < scene_count; ++i ) {
         load_scene( scenes[ i ], gltf_data.scenes[ i ], allocator );
@@ -166,7 +166,7 @@ static void load_buffers( json& json_data, glTF::glTF& gltf_data, Allocator* all
 
     sizet buffer_count = buffers.size();
     gltf_data.buffers = ( glTF::Buffer* )allocate_and_zero( allocator, sizeof( glTF::Buffer ) * buffer_count );
-    gltf_data.buffers_count = buffer_count;
+    gltf_data.buffers_count = u32(buffer_count);
 
     for ( sizet i = 0; i < buffer_count; ++i ) {
         load_buffer( buffers[ i ], gltf_data.buffers[ i ], allocator );
@@ -187,7 +187,7 @@ static void load_buffer_views( json& json_data, glTF::glTF& gltf_data, Allocator
 
     sizet buffer_count = buffers.size();
     gltf_data.buffer_views = ( glTF::BufferView* )allocate_and_zero( allocator, sizeof( glTF::BufferView ) * buffer_count );
-    gltf_data.buffer_views_count = buffer_count;
+    gltf_data.buffer_views_count = u32(buffer_count);
 
     for ( sizet i = 0; i < buffer_count; ++i ) {
         load_buffer_view( buffers[ i ], gltf_data.buffer_views[ i ], allocator );
@@ -212,7 +212,7 @@ static void load_nodes( json& json_data, glTF::glTF& gltf_data, Allocator* alloc
 
     sizet array_count = array.size();
     gltf_data.nodes = ( glTF::Node* )allocate_and_zero( allocator, sizeof( glTF::Node ) * array_count );
-    gltf_data.nodes_count = array_count;
+    gltf_data.nodes_count = u32(array_count);
 
     for ( sizet i = 0; i < array_count; ++i ) {
         load_node( array[ i ], gltf_data.nodes[ i ], allocator );
@@ -227,7 +227,7 @@ static void load_mesh_primitive( json& json_data, glTF::MeshPrimitive& mesh_prim
     json attributes = json_data[ "attributes" ];
 
     mesh_primitive.attributes = ( glTF::MeshPrimitive::Attribute* )allocate_and_zero( allocator, sizeof( glTF::MeshPrimitive::Attribute ) * attributes.size() );
-    mesh_primitive.attribute_count = attributes.size();
+    mesh_primitive.attribute_count = u32(attributes.size());
 
     u32 index = 0;
     for ( auto json_attribute : attributes.items() ) {
@@ -248,7 +248,7 @@ static void load_mesh_primitives( json& json_data, glTF::Mesh& mesh, Allocator* 
 
     sizet array_count = array.size();
     mesh.primitives = ( glTF::MeshPrimitive* )allocate_and_zero( allocator, sizeof( glTF::MeshPrimitive ) * array_count );
-    mesh.primitives_count = array_count;
+    mesh.primitives_count = u32(array_count);
 
     for ( sizet i = 0; i < array_count; ++i ) {
         load_mesh_primitive( array[ i ], mesh.primitives[ i ], allocator );
@@ -266,7 +266,7 @@ static void load_meshes( json& json_data, glTF::glTF& gltf_data, Allocator* allo
 
     sizet array_count = array.size();
     gltf_data.meshes = ( glTF::Mesh* )allocate_and_zero( allocator, sizeof( glTF::Mesh ) * array_count );
-    gltf_data.meshes_count = array_count;
+    gltf_data.meshes_count = u32(array_count);
 
     for ( sizet i = 0; i < array_count; ++i ) {
         load_mesh( array[ i ], gltf_data.meshes[ i ], allocator );
@@ -290,7 +290,7 @@ static void load_accessors( json& json_data, glTF::glTF& gltf_data, Allocator* a
 
     sizet array_count = array.size();
     gltf_data.accessors = ( glTF::Accessor* )allocate_and_zero( allocator, sizeof( glTF::Accessor ) * array_count );
-    gltf_data.accessors_count = array_count;
+    gltf_data.accessors_count = u32(array_count);
 
     for ( sizet i = 0; i < array_count; ++i ) {
         load_accessor( array[ i ], gltf_data.accessors[ i ], allocator );
@@ -382,7 +382,7 @@ static void load_materials( json& json_data, glTF::glTF& gltf_data, Allocator* a
 
     sizet array_count = array.size();
     gltf_data.materials = ( glTF::Material* )allocate_and_zero( allocator, sizeof( glTF::Material ) * array_count );
-    gltf_data.materials_count = array_count;
+    gltf_data.materials_count = u32(array_count);
 
     for ( sizet i = 0; i < array_count; ++i ) {
         load_material( array[ i ], gltf_data.materials[ i ], allocator );
@@ -400,7 +400,7 @@ static void load_textures( json& json_data, glTF::glTF& gltf_data, Allocator* al
 
     sizet array_count = array.size();
     gltf_data.textures = ( glTF::Texture* )allocate_and_zero( allocator, sizeof( glTF::Texture ) * array_count );
-    gltf_data.textures_count = array_count;
+    gltf_data.textures_count = u32(array_count);
 
     for ( sizet i = 0; i < array_count; ++i ) {
         load_texture( array[ i ], gltf_data.textures[ i ], allocator );
@@ -418,7 +418,7 @@ static void load_images( json& json_data, glTF::glTF& gltf_data, Allocator* allo
 
     sizet array_count = array.size();
     gltf_data.images = ( glTF::Image* )allocate_and_zero( allocator, sizeof( glTF::Image ) * array_count );
-    gltf_data.images_count = array_count;
+    gltf_data.images_count = u32(array_count);
 
     for ( sizet i = 0; i < array_count; ++i ) {
         load_image( array[ i ], gltf_data.images[ i ], allocator );
@@ -437,7 +437,7 @@ static void load_samplers( json& json_data, glTF::glTF& gltf_data, Allocator* al
 
     sizet array_count = array.size();
     gltf_data.samplers = ( glTF::Sampler* )allocate_and_zero( allocator, sizeof( glTF::Sampler ) * array_count );
-    gltf_data.samplers_count = array_count;
+    gltf_data.samplers_count = u32(array_count);
 
     for ( sizet i = 0; i < array_count; ++i ) {
         load_sampler( array[ i ], gltf_data.samplers[ i ], allocator );
@@ -455,7 +455,7 @@ static void load_skins( json& json_data, glTF::glTF& gltf_data, Allocator* alloc
 
     sizet array_count = array.size();
     gltf_data.skins = ( glTF::Skin* )allocate_and_zero( allocator, sizeof( glTF::Skin ) * array_count );
-    gltf_data.skins_count = array_count;
+    gltf_data.skins_count = u32(array_count);
 
     for ( sizet i = 0; i < array_count; ++i ) {
         load_skin( array[ i ], gltf_data.skins[ i ], allocator );
@@ -493,7 +493,7 @@ static void load_animation( json& json_data, glTF::Animation& animation, Allocat
         }
 
         animation.samplers = values;
-        animation.samplers_count = count;
+        animation.samplers_count = u32(count);
     }
 
     json_array = json_data.at( "channels" );
@@ -530,7 +530,7 @@ static void load_animation( json& json_data, glTF::Animation& animation, Allocat
         }
 
         animation.channels = values;
-        animation.channels_count = count;
+        animation.channels_count = u32(count);
     }
 }
 
@@ -539,7 +539,7 @@ static void load_animations( json& json_data, glTF::glTF& gltf_data, Allocator* 
 
     sizet array_count = array.size();
     gltf_data.animations = ( glTF::Animation* )allocate_and_zero( allocator, sizeof( glTF::Animation ) * array_count );
-    gltf_data.animations_count = array_count;
+    gltf_data.animations_count = u32(array_count);
 
     for ( sizet i = 0; i < array_count; ++i ) {
         load_animation( array[ i ], gltf_data.animations[ i ], allocator );

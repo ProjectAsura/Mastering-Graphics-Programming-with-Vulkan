@@ -1050,7 +1050,7 @@ static void load_debug_mesh( cstring filename, Allocator* resident_allocator, Re
     {
        BufferCreation creation{ };
        sizet buffer_size = positions.size * sizeof( vec3s );
-       creation.set( VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, ResourceUsageType::Immutable, buffer_size ).set_data( positions.data ).set_name( "debug_mesh_pos" );
+       creation.set( VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, ResourceUsageType::Immutable, u32(buffer_size) ).set_data( positions.data ).set_name( "debug_mesh_pos" );
 
        *mesh_buffer = renderer->create_buffer( creation );
     }
@@ -1058,7 +1058,7 @@ static void load_debug_mesh( cstring filename, Allocator* resident_allocator, Re
     {
        BufferCreation creation{ };
        sizet buffer_size = indices.size * sizeof( u32 );
-       creation.set( VK_BUFFER_USAGE_INDEX_BUFFER_BIT, ResourceUsageType::Immutable, buffer_size ).set_data( indices.data ).set_name( "debug_mesh_indices" );
+       creation.set( VK_BUFFER_USAGE_INDEX_BUFFER_BIT, ResourceUsageType::Immutable, u32(buffer_size) ).set_data( indices.data ).set_name( "debug_mesh_indices" );
 
        *index_buffer = renderer->create_buffer( creation );
     }
@@ -1616,7 +1616,7 @@ void CullingEarlyPass::render( u32 current_frame_index, CommandBuffer* gpu_comma
 
         debug_line_count[ 0 ] = 0;
         debug_line_count[ 1 ] = 0;
-        debug_line_count[ 2 ] = renderer->gpu->current_frame;
+        debug_line_count[ 2 ] = f32(renderer->gpu->current_frame);
         debug_line_count[ 3 ] = 0;
 
         renderer->gpu->unmap_buffer( cb_map );
@@ -3520,8 +3520,8 @@ void RenderScene::upload_gpu_data( UploadGpuDataContext& context ) {
         gpu.unmap_buffer( cb_map );
     }
 
-    const u32 tile_x_count = scene_data.resolution_x / k_tile_size;
-    const u32 tile_y_count = scene_data.resolution_y / k_tile_size;
+    const u32 tile_x_count = u32(scene_data.resolution_x / k_tile_size);
+    const u32 tile_y_count = u32(scene_data.resolution_y / k_tile_size);
     const u32 tiles_entry_count = tile_x_count * tile_y_count * k_num_words;
     const u32 buffer_size = tiles_entry_count * sizeof( u32 );
 

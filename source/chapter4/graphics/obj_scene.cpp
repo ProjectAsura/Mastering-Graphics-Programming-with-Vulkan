@@ -218,7 +218,7 @@ void ObjScene::init( cstring filename, cstring path, Allocator* resident_allocat
         VkBufferUsageFlags flags = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT;
 
         BufferCreation creation{ };
-        creation.set( flags, ResourceUsageType::Immutable, buffer_size ).set_persistent( true ).set_name( nullptr );
+        creation.set( flags, ResourceUsageType::Immutable, u32(buffer_size) ).set_persistent( true ).set_name( nullptr );
 
         BufferHandle br = renderer->gpu->create_buffer( creation );
 
@@ -229,7 +229,7 @@ void ObjScene::init( cstring filename, cstring path, Allocator* resident_allocat
 
         raptor_mesh.geometry_buffer_cpu = br;
 
-        sizet offset = 0;
+        u32 offset = 0;
 
         memcpy( buffer->mapped_data + offset, indices.data, indices.size * sizeof( u32 ) );
         raptor_mesh.index_offset = offset;
@@ -250,7 +250,7 @@ void ObjScene::init( cstring filename, cstring path, Allocator* resident_allocat
         memcpy( buffer->mapped_data + offset, uv_coords.data, uv_coords.size * sizeof( vec2s ) );
         raptor_mesh.texcoord_offset = offset;
 
-        creation.reset().set( flags, ResourceUsageType::Immutable, buffer_size ).set_device_only( true ).set_name( nullptr );
+        creation.reset().set( flags, ResourceUsageType::Immutable, u32(buffer_size) ).set_device_only( true ).set_name( nullptr );
         br = renderer->gpu->create_buffer( creation );
         raptor_mesh.geometry_buffer_gpu = br;
 
@@ -542,7 +542,7 @@ void ObjDrawTask::ExecuteRange( enki::TaskSetPartition range_, uint32_t threadnu
     CommandBuffer* gpu_commands = gpu->get_command_buffer( threadnum_, true );
     gpu_commands->push_marker( "Frame" );
 
-    gpu_commands->clear( 0.3, 0.3, 0.3, 1 );
+    gpu_commands->clear( 0.3f, 0.3f, 0.3f, 1.0f );
     gpu_commands->clear_depth_stencil( 1.0f, 0 );
     gpu_commands->set_scissor( nullptr );
     gpu_commands->set_viewport( nullptr );

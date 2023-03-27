@@ -107,8 +107,8 @@ void FrameGraph::parse( cstring file_path, StackAllocator* temp_allocator ) {
         json pass_outputs = pass[ "outputs" ];
 
         FrameGraphNodeCreation node_creation{ };
-        node_creation.inputs.init( temp_allocator, pass_inputs.size() );
-        node_creation.outputs.init( temp_allocator, pass_outputs.size() );
+        node_creation.inputs.init( temp_allocator, u32(pass_inputs.size()) );
+        node_creation.outputs.init( temp_allocator, u32(pass_outputs.size()) );
 
         for ( sizet ii = 0; ii < pass_inputs.size(); ++ii ) {
             json pass_input = pass_inputs[ ii ];
@@ -295,7 +295,7 @@ static void create_render_pass( FrameGraph* frame_graph, FrameGraphNode* node ) 
 
     // NOTE(marco): first create the outputs, then we can patch the input resources
     // with the right handles
-    for ( sizet i = 0; i < node->outputs.size; ++i ) {
+    for ( u32 i = 0; i < node->outputs.size; ++i ) {
         FrameGraphResource* output_resource = frame_graph->access_resource( node->outputs[ i ] );
 
         FrameGraphResourceInfo& info = output_resource->resource_info;
@@ -311,7 +311,7 @@ static void create_render_pass( FrameGraph* frame_graph, FrameGraphNode* node ) 
         }
     }
 
-    for ( sizet i = 0; i < node->inputs.size; ++i ) {
+    for ( u32 i = 0; i < node->inputs.size; ++i ) {
         FrameGraphResource* input_resource = frame_graph->access_resource( node->inputs[ i ] );
 
         FrameGraphResourceInfo& info = input_resource->resource_info;
@@ -435,19 +435,19 @@ void FrameGraph::compile() {
     // NOTE(marco): allocations and deallocations are used for verification purposes only
     sizet resource_count = builder->resource_cache.resources.used_indices;
     Array<FrameGraphNodeHandle> allocations;
-    allocations.init( &local_allocator, resource_count, resource_count );
+    allocations.init( &local_allocator, u32(resource_count), u32(resource_count) );
     for ( u32 i = 0; i < resource_count; ++i) {
         allocations[ i ].index = k_invalid_index;
     }
 
     Array<FrameGraphNodeHandle> deallocations;
-    deallocations.init( &local_allocator, resource_count, resource_count );
+    deallocations.init( &local_allocator, u32(resource_count), u32(resource_count) );
     for ( u32 i = 0; i < resource_count; ++i) {
         deallocations[ i ].index = k_invalid_index;
     }
 
     Array<TextureHandle> free_list;
-    free_list.init( &local_allocator, resource_count );
+    free_list.init( &local_allocator, u32(resource_count) );
 
     size_t peak_memory = 0;
     size_t instant_memory = 0;
@@ -807,7 +807,7 @@ FrameGraphNodeHandle FrameGraphBuilder::create_node( const FrameGraphNodeCreatio
 
     // NOTE(marco): first create the outputs, then we can patch the input resources
     // with the right handles
-    for ( sizet i = 0; i < creation.outputs.size; ++i ) {
+    for ( u32 i = 0; i < creation.outputs.size; ++i ) {
         const FrameGraphResourceOutputCreation& output_creation = creation.outputs[ i ];
 
         FrameGraphResourceHandle output = create_node_output( output_creation, node_handle );
@@ -815,7 +815,7 @@ FrameGraphNodeHandle FrameGraphBuilder::create_node( const FrameGraphNodeCreatio
         node->outputs.push( output );
     }
 
-    for ( sizet i = 0; i < creation.inputs.size; ++i ) {
+    for ( u32 i = 0; i < creation.inputs.size; ++i ) {
         const FrameGraphResourceInputCreation& input_creation = creation.inputs[ i ];
 
         FrameGraphResourceHandle input_handle = create_node_input( input_creation );

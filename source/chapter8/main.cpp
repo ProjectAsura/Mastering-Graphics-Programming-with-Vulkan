@@ -766,7 +766,7 @@ int main( int argc, char** argv ) {
             const Light& light = scene->lights[ light_to_debug ];
             f32 half_radius = light.radius;
             scene->debug_renderer.aabb( glms_vec3_sub( light.world_position, { half_radius, half_radius ,half_radius } ), glms_vec3_add( light.world_position, { half_radius, half_radius , half_radius } ), { Color::white } );
-            scene->debug_renderer.aabb( glms_vec3_sub( light.world_position, { .1, .1, .1 } ), glms_vec3_add( light.world_position, { .1, .1, .1 } ), { Color::green } );
+            scene->debug_renderer.aabb( glms_vec3_sub( light.world_position, { .1f, .1f, .1f } ), glms_vec3_add( light.world_position, { .1f, .1f, .1f } ), { Color::green } );
 
             //f32 distance = glms_vec3_distance( { 0,0,0 }, light.world_position );
             //f32 distance_normalized = distance / (half_radius * 2.f);
@@ -819,27 +819,27 @@ int main( int argc, char** argv ) {
                 u32 res = get_cube_face_mask( cubemap_position, aabb );
                 // Positive X
                 if ( ( res & 1 ) ) {
-                    scene->debug_renderer.aabb( glms_vec3_add( cubemap_position, { 1,0,0 } ), glms_vec3_add( cubemap_position, { 1.2, .2, .2 }), { Color::get_distinct_color( 0 ) } );
+                    scene->debug_renderer.aabb( glms_vec3_add( cubemap_position, { 1,0,0 } ), glms_vec3_add( cubemap_position, { 1.2f, .2f, .2f }), { Color::get_distinct_color( 0 ) } );
                 }
                 // Negative X
                 if ( ( res & 2 ) ) {
-                    scene->debug_renderer.aabb( glms_vec3_add( cubemap_position, { -1,0,0 }), glms_vec3_add( cubemap_position, { -1.2, -.2, -.2 }), { Color::get_distinct_color( 1 ) } );
+                    scene->debug_renderer.aabb( glms_vec3_add( cubemap_position, { -1,0,0 }), glms_vec3_add( cubemap_position, { -1.2f, -.2f, -.2f }), { Color::get_distinct_color( 1 ) } );
                 }
                 // Positive Y
                 if ( ( res & 4 ) ) {
-                    scene->debug_renderer.aabb( glms_vec3_add( cubemap_position, { 0,1,0 }), glms_vec3_add( cubemap_position, { .2, 1.2, .2 }), { Color::get_distinct_color( 2 ) } );
+                    scene->debug_renderer.aabb( glms_vec3_add( cubemap_position, { 0,1,0 }), glms_vec3_add( cubemap_position, { .2f, 1.2f, .2f }), { Color::get_distinct_color( 2 ) } );
                 }
                 // Negative Y
                 if ( ( res & 8 ) ) {
-                    scene->debug_renderer.aabb( glms_vec3_add( cubemap_position, { 0,-1,0 }), glms_vec3_add( cubemap_position, { .2, -1.2, .2 }), { Color::get_distinct_color( 3 ) } );
+                    scene->debug_renderer.aabb( glms_vec3_add( cubemap_position, { 0,-1,0 }), glms_vec3_add( cubemap_position, { .2f, -1.2f, .2f }), { Color::get_distinct_color( 3 ) } );
                 }
                 // Positive Z
                 if ( ( res & 16 ) ) {
-                    scene->debug_renderer.aabb( glms_vec3_add( cubemap_position, { 0,0,1 }), glms_vec3_add( cubemap_position, { .2, .2, 1.2 }), { Color::get_distinct_color( 4 ) } );
+                    scene->debug_renderer.aabb( glms_vec3_add( cubemap_position, { 0,0,1 }), glms_vec3_add( cubemap_position, { .2f, .2f, 1.2f }), { Color::get_distinct_color( 4 ) } );
                 }
                 // Negative Z
                 if ( ( res & 32 ) ) {
-                    scene->debug_renderer.aabb( glms_vec3_add( cubemap_position, { 0,0,-1 }), glms_vec3_add( cubemap_position, { .2, .2, -1.2 }), { Color::get_distinct_color( 5 ) } );
+                    scene->debug_renderer.aabb( glms_vec3_add( cubemap_position, { 0,0,-1 }), glms_vec3_add( cubemap_position, { .2f, .2f, -1.2f }), { Color::get_distinct_color( 5 ) } );
                 }
                 // Draw aabb to test inside cubemap
                 scene->debug_renderer.aabb( aabb[ 0 ], aabb[ 1 ], { Color::white } );
@@ -874,8 +874,8 @@ int main( int argc, char** argv ) {
                 const u32 z_count = 32;
                 const f32 tile_size = 64.0f;
                 const f32 tile_pixels = tile_size * tile_size;
-                const u32 tile_x_count = scene_data.resolution_x / f32( tile_size );
-                const u32 tile_y_count = scene_data.resolution_y / f32( tile_size );
+                const u32 tile_x_count = u32(scene_data.resolution_x / f32( tile_size ));
+                const u32 tile_y_count = u32(scene_data.resolution_y / f32( tile_size ));
 
                 const f32 tile_radius_sq = ( ( tile_size * 0.5f ) * ( tile_size * 0.5f ) ) * 2;
 
@@ -1059,7 +1059,7 @@ int main( int argc, char** argv ) {
                 lights_aabb_view.shutdown();
 
                 if ( enable_light_tile_debug ) {
-                    f32 light_pos_len = 0.01;
+                    f32 light_pos_len = 0.01f;
                     for ( u32 l = 0; l < light_count; ++l ) {
                         Light& light = scene->lights[ l ];
 

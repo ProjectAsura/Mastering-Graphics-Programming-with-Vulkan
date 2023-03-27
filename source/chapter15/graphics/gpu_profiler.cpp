@@ -67,7 +67,7 @@ void GpuVisualProfiler::update( GpuDevice& gpu ) {
     // Collect pipeline statistics
     pipeline_statistics = &gpu.gpu_time_queries_manager->frame_pipeline_statistics;
 
-    s_framebuffer_pixel_count = gpu.swapchain_width * gpu.swapchain_height;
+    s_framebuffer_pixel_count = f32(gpu.swapchain_width * gpu.swapchain_height);
 
     // Get colors
     for ( u32 i = 0; i < active_timestamps; ++i ) {

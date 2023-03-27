@@ -802,7 +802,7 @@ static void load_debug_mesh( cstring filename, Allocator* resident_allocator, Re
     {
        BufferCreation creation{ };
        sizet buffer_size = positions.size * sizeof( vec3s );
-       creation.set( VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, ResourceUsageType::Immutable, buffer_size ).set_data( positions.data ).set_name( "debug_mesh_pos" );
+       creation.set( VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, ResourceUsageType::Immutable, u32(buffer_size) ).set_data( positions.data ).set_name( "debug_mesh_pos" );
 
        *mesh_buffer = renderer->create_buffer( creation );
     }
@@ -810,7 +810,7 @@ static void load_debug_mesh( cstring filename, Allocator* resident_allocator, Re
     {
        BufferCreation creation{ };
        sizet buffer_size = indices.size * sizeof( u32 );
-       creation.set( VK_BUFFER_USAGE_INDEX_BUFFER_BIT, ResourceUsageType::Immutable, buffer_size ).set_data( indices.data ).set_name( "debug_mesh_indices" );
+       creation.set( VK_BUFFER_USAGE_INDEX_BUFFER_BIT, ResourceUsageType::Immutable, u32(buffer_size) ).set_data( indices.data ).set_name( "debug_mesh_indices" );
 
        *index_buffer = renderer->create_buffer( creation );
     }
@@ -1008,7 +1008,7 @@ void DebugPass::prepare_draws( RenderScene& scene, FrameGraph* frame_graph, Allo
     {
        BufferCreation creation{ };
        sizet buffer_size = bounding_matrices.size * sizeof( mat4s );
-       creation.set( VK_BUFFER_USAGE_STORAGE_BUFFER_BIT, ResourceUsageType::Immutable, buffer_size ).set_data( bounding_matrices.data ).set_name( "meshlet_bounding_spheres_transform" );
+       creation.set( VK_BUFFER_USAGE_STORAGE_BUFFER_BIT, ResourceUsageType::Immutable, u32(buffer_size) ).set_data( bounding_matrices.data ).set_name( "meshlet_bounding_spheres_transform" );
 
        sphere_matrices_buffer = renderer->create_buffer( creation );
     }
@@ -1016,7 +1016,7 @@ void DebugPass::prepare_draws( RenderScene& scene, FrameGraph* frame_graph, Allo
     {
        BufferCreation creation{ };
        sizet buffer_size = sphere_indirect_commands.size * sizeof( VkDrawIndexedIndirectCommand );
-       creation.set( VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT, ResourceUsageType::Immutable, buffer_size ).set_data( sphere_indirect_commands.data ).set_name( "meshlet_bound_sphere_draw_commands" );
+       creation.set( VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT, ResourceUsageType::Immutable, u32(buffer_size) ).set_data( sphere_indirect_commands.data ).set_name( "meshlet_bound_sphere_draw_commands" );
 
        sphere_draw_indirect_buffer = renderer->create_buffer( creation );
     }
@@ -1033,7 +1033,7 @@ void DebugPass::prepare_draws( RenderScene& scene, FrameGraph* frame_graph, Allo
     {
        BufferCreation creation{ };
        sizet buffer_size = cone_matrices.size * sizeof( mat4s );
-       creation.set( VK_BUFFER_USAGE_STORAGE_BUFFER_BIT, ResourceUsageType::Immutable, buffer_size ).set_data( cone_matrices.data ).set_name( "meshlet_cones_transform" );
+       creation.set( VK_BUFFER_USAGE_STORAGE_BUFFER_BIT, ResourceUsageType::Immutable, u32(buffer_size) ).set_data( cone_matrices.data ).set_name( "meshlet_cones_transform" );
 
        cone_matrices_buffer = renderer->create_buffer( creation );
     }
@@ -1041,7 +1041,7 @@ void DebugPass::prepare_draws( RenderScene& scene, FrameGraph* frame_graph, Allo
     {
        BufferCreation creation{ };
        sizet buffer_size = cone_indirect_commands.size * sizeof( VkDrawIndexedIndirectCommand );
-       creation.set( VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT, ResourceUsageType::Immutable, buffer_size ).set_data( cone_indirect_commands.data ).set_name( "meshlet_cone_draw_commands" );
+       creation.set( VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT, ResourceUsageType::Immutable, u32(buffer_size) ).set_data( cone_indirect_commands.data ).set_name( "meshlet_cone_draw_commands" );
 
        cone_draw_indirect_buffer = renderer->create_buffer( creation );
     }
@@ -1334,7 +1334,7 @@ void CullingEarlyPass::render( CommandBuffer* gpu_commands, RenderScene* render_
 
         debug_line_count[ 0 ] = 0;
         debug_line_count[ 1 ] = 0;
-        debug_line_count[ 2 ] = renderer->gpu->current_frame;
+        debug_line_count[ 2 ] = f32(renderer->gpu->current_frame);
         debug_line_count[ 3 ] = 0;
 
         renderer->gpu->unmap_buffer( cb_map );

@@ -1565,7 +1565,7 @@ void dump_shader_code( StringBuffer& temp_string_buffer, cstring code, VkShaderS
         }
 
         temp_string_buffer.clear();
-        char* line = temp_string_buffer.append_use_substring( current_code, 0, ( end_of_line - current_code ) );
+        char* line = temp_string_buffer.append_use_substring( current_code, 0u, u32( end_of_line - current_code ) );
         rprint( "%u: %s", line_index++, line );
 
         current_code = end_of_line;
@@ -2165,7 +2165,7 @@ PipelineHandle GpuDevice::create_pipeline( const PipelineCreation& creation, con
 
         sizet current_marker = temporary_allocator->get_marker();
         Array<u8> shader_binding_table_data{ };
-        shader_binding_table_data.init( temporary_allocator, shader_binding_table_size, shader_binding_table_size );
+        shader_binding_table_data.init( temporary_allocator, u32(shader_binding_table_size), u32(shader_binding_table_size) );
 
         check( vkGetRayTracingShaderGroupHandlesKHR( vulkan_device, pipeline->vk_pipeline, 0, shader_state_data->active_shaders, shader_binding_table_size, shader_binding_table_data.data ) );
 
@@ -3664,7 +3664,7 @@ PagePoolHandle GpuDevice::allocate_texture_pool( TextureHandle texture_handle, u
 
     page_pool->block_width = block_width;
     page_pool->block_height = block_height;
-    page_pool->block_size = memory_requirements.alignment; // NOTE(marco): alignment corresponds to block size for sparse textures
+    page_pool->block_size = u32(memory_requirements.alignment); // NOTE(marco): alignment corresponds to block size for sparse textures
     page_pool->used_pages = 0;
     page_pool->free_list = nullptr;
     page_pool->size = pool_size;
@@ -4169,7 +4169,7 @@ void GpuDevice::present( CommandBuffer* async_compute_command_buffer ) {
                     double elapsed_time = range * gpu_timestamp_frequency;
 
                     timestamp.elapsed_ms = elapsed_time;
-                    timestamp.frame_index = absolute_frame;
+                    timestamp.frame_index = u32(absolute_frame);
 
                     //print_format( "%s: %2.3f d(%u) - ", timestamp.name, elapsed_time, timestamp.depth );
                 }

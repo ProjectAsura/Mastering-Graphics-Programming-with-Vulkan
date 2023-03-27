@@ -13,22 +13,22 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{21DA0E29-AFF5-42FD-B2FF-77D85FD70DCD}</ProjectGuid>
+    <ProjectGuid>{EAEC24FC-85B3-467E-9CA6-556D0E216299}</ProjectGuid>
     <RootNamespace>RaptorEngine</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>RaptorEngine_Chapter6</ProjectName>
+    <ProjectName>RaptorEngine_Chapter05</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -94,9 +94,9 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;RAPTOR_SPV_FOLDER="../source/chapter6/shaders/";RAPTOR_SHADER_FOLDER="../source/chapter6/shaders/";RAPTOR_WORKING_FOLDER="../source/chapter6/";RAPTOR_DATA_FOLDER="../binaries/data/";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;RAPTOR_SPV_FOLDER="../source/chapter5/shaders/";RAPTOR_SHADER_FOLDER="../source/chapter5/shaders/";RAPTOR_WORKING_FOLDER="../source/chapter5/";RAPTOR_DATA_FOLDER="../binaries/data/";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../source/raptor;../source;../source/chapter6;$(VULKAN_SDK)/include;../binaries/SDL2-2.0.18/include;../binaries/assimp/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../source/raptor;../source;../source/chapter5;$(VULKAN_SDK)/include;../binaries/SDL2-2.0.18/include;../binaries/assimp/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -119,9 +119,9 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;RAPTOR_SPV_FOLDER="../source/chapter6/shaders/";RAPTOR_SHADER_FOLDER="../source/chapter6/shaders/";RAPTOR_WORKING_FOLDER="../source/chapter6/";RAPTOR_DATA_FOLDER="../binaries/data/";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;RAPTOR_SPV_FOLDER="../source/chapter5/shaders/";RAPTOR_SHADER_FOLDER="../source/chapter5/shaders/";RAPTOR_WORKING_FOLDER="../source/chapter5/";RAPTOR_DATA_FOLDER="../binaries/data/";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../source/raptor;../source;../source/chapter6;$(VULKAN_SDK)/include;../binaries/SDL2-2.0.18/include;../binaries/assimp/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../source/raptor;../source;../source/chapter5;$(VULKAN_SDK)/include;../binaries/SDL2-2.0.18/include;../binaries/assimp/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -133,23 +133,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\source\chapter6\graphics\asynchronous_loader.hpp" />
-    <ClInclude Include="..\source\chapter6\graphics\command_buffer.hpp" />
-    <ClInclude Include="..\source\chapter6\graphics\frame_graph.hpp" />
-    <ClInclude Include="..\source\chapter6\graphics\gltf_scene.hpp" />
-    <ClInclude Include="..\source\chapter6\graphics\gpu_device.hpp" />
-    <ClInclude Include="..\source\chapter6\graphics\gpu_enum.hpp" />
-    <ClInclude Include="..\source\chapter6\graphics\gpu_profiler.hpp" />
-    <ClInclude Include="..\source\chapter6\graphics\gpu_resources.hpp" />
-    <ClInclude Include="..\source\chapter6\graphics\obj_scene.hpp" />
-    <ClInclude Include="..\source\chapter6\graphics\raptor_imgui.hpp" />
-    <ClInclude Include="..\source\chapter6\graphics\renderer.hpp" />
-    <ClInclude Include="..\source\chapter6\graphics\render_resources_loader.hpp" />
-    <ClInclude Include="..\source\chapter6\graphics\render_scene.hpp" />
-    <ClInclude Include="..\source\chapter6\graphics\scene_graph.hpp" />
-    <ClInclude Include="..\source\chapter6\graphics\spirv_parser.hpp" />
-    <ClInclude Include="..\source\chapter6\shaders\mesh.h" />
-    <ClInclude Include="..\source\chapter6\shaders\platform.h" />
+    <ClInclude Include="..\source\chapter5\graphics\asynchronous_loader.hpp" />
+    <ClInclude Include="..\source\chapter5\graphics\command_buffer.hpp" />
+    <ClInclude Include="..\source\chapter5\graphics\frame_graph.hpp" />
+    <ClInclude Include="..\source\chapter5\graphics\gltf_scene.hpp" />
+    <ClInclude Include="..\source\chapter5\graphics\gpu_device.hpp" />
+    <ClInclude Include="..\source\chapter5\graphics\gpu_enum.hpp" />
+    <ClInclude Include="..\source\chapter5\graphics\gpu_profiler.hpp" />
+    <ClInclude Include="..\source\chapter5\graphics\gpu_resources.hpp" />
+    <ClInclude Include="..\source\chapter5\graphics\obj_scene.hpp" />
+    <ClInclude Include="..\source\chapter5\graphics\raptor_imgui.hpp" />
+    <ClInclude Include="..\source\chapter5\graphics\renderer.hpp" />
+    <ClInclude Include="..\source\chapter5\graphics\render_resources_loader.hpp" />
+    <ClInclude Include="..\source\chapter5\graphics\render_scene.hpp" />
+    <ClInclude Include="..\source\chapter5\graphics\scene_graph.hpp" />
+    <ClInclude Include="..\source\chapter5\graphics\spirv_parser.hpp" />
+    <ClInclude Include="..\source\chapter5\shaders\mesh.h" />
+    <ClInclude Include="..\source\chapter5\shaders\platform.h" />
     <ClInclude Include="..\source\external\imgui\imconfig.h" />
     <ClInclude Include="..\source\external\imgui\imgui.h" />
     <ClInclude Include="..\source\external\imgui\imgui_impl_sdl.h" />
@@ -192,24 +192,23 @@
     <ClInclude Include="..\source\raptor\foundation\service_manager.hpp" />
     <ClInclude Include="..\source\raptor\foundation\string.hpp" />
     <ClInclude Include="..\source\raptor\foundation\time.hpp" />
-    <ClInclude Include="..\source\raptor\foundation\windows_declarations.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\source\chapter6\graphics\asynchronous_loader.cpp" />
-    <ClCompile Include="..\source\chapter6\graphics\command_buffer.cpp" />
-    <ClCompile Include="..\source\chapter6\graphics\frame_graph.cpp" />
-    <ClCompile Include="..\source\chapter6\graphics\gltf_scene.cpp" />
-    <ClCompile Include="..\source\chapter6\graphics\gpu_device.cpp" />
-    <ClCompile Include="..\source\chapter6\graphics\gpu_profiler.cpp" />
-    <ClCompile Include="..\source\chapter6\graphics\gpu_resources.cpp" />
-    <ClCompile Include="..\source\chapter6\graphics\obj_scene.cpp" />
-    <ClCompile Include="..\source\chapter6\graphics\raptor_imgui.cpp" />
-    <ClCompile Include="..\source\chapter6\graphics\renderer.cpp" />
-    <ClCompile Include="..\source\chapter6\graphics\render_resources_loader.cpp" />
-    <ClCompile Include="..\source\chapter6\graphics\render_scene.cpp" />
-    <ClCompile Include="..\source\chapter6\graphics\scene_graph.cpp" />
-    <ClCompile Include="..\source\chapter6\graphics\spirv_parser.cpp" />
-    <ClCompile Include="..\source\chapter6\main.cpp" />
+    <ClCompile Include="..\source\chapter5\graphics\asynchronous_loader.cpp" />
+    <ClCompile Include="..\source\chapter5\graphics\command_buffer.cpp" />
+    <ClCompile Include="..\source\chapter5\graphics\frame_graph.cpp" />
+    <ClCompile Include="..\source\chapter5\graphics\gltf_scene.cpp" />
+    <ClCompile Include="..\source\chapter5\graphics\gpu_device.cpp" />
+    <ClCompile Include="..\source\chapter5\graphics\gpu_profiler.cpp" />
+    <ClCompile Include="..\source\chapter5\graphics\gpu_resources.cpp" />
+    <ClCompile Include="..\source\chapter5\graphics\obj_scene.cpp" />
+    <ClCompile Include="..\source\chapter5\graphics\raptor_imgui.cpp" />
+    <ClCompile Include="..\source\chapter5\graphics\renderer.cpp" />
+    <ClCompile Include="..\source\chapter5\graphics\render_resources_loader.cpp" />
+    <ClCompile Include="..\source\chapter5\graphics\render_scene.cpp" />
+    <ClCompile Include="..\source\chapter5\graphics\scene_graph.cpp" />
+    <ClCompile Include="..\source\chapter5\graphics\spirv_parser.cpp" />
+    <ClCompile Include="..\source\chapter5\main.cpp" />
     <ClCompile Include="..\source\external\enkiTS\TaskScheduler.cpp" />
     <ClCompile Include="..\source\external\imgui\imgui.cpp" />
     <ClCompile Include="..\source\external\imgui\imgui_demo.cpp" />
@@ -261,18 +260,18 @@
     <ClCompile Include="..\source\raptor\foundation\time.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\source\chapter6\shaders\depth.vert" />
-    <None Include="..\source\chapter6\shaders\dof.glsl" />
-    <None Include="..\source\chapter6\shaders\dof.json" />
-    <None Include="..\source\chapter6\shaders\fullscreen.glsl" />
-    <None Include="..\source\chapter6\shaders\fullscreen.json" />
-    <None Include="..\source\chapter6\shaders\gbuffer.glsl" />
-    <None Include="..\source\chapter6\shaders\main.glsl" />
-    <None Include="..\source\chapter6\shaders\main.json" />
-    <None Include="..\source\chapter6\shaders\pbr.glsl" />
-    <None Include="..\source\chapter6\shaders\pbr_lighting.json" />
-    <None Include="..\source\chapter6\shaders\phong.frag" />
-    <None Include="..\source\chapter6\shaders\phong.vert" />
+    <None Include="..\source\chapter5\shaders\depth.vert" />
+    <None Include="..\source\chapter5\shaders\dof.glsl" />
+    <None Include="..\source\chapter5\shaders\dof.json" />
+    <None Include="..\source\chapter5\shaders\fullscreen.glsl" />
+    <None Include="..\source\chapter5\shaders\fullscreen.json" />
+    <None Include="..\source\chapter5\shaders\gbuffer.glsl" />
+    <None Include="..\source\chapter5\shaders\main.glsl" />
+    <None Include="..\source\chapter5\shaders\main.json" />
+    <None Include="..\source\chapter5\shaders\pbr.glsl" />
+    <None Include="..\source\chapter5\shaders\pbr_lighting.json" />
+    <None Include="..\source\chapter5\shaders\phong.frag" />
+    <None Include="..\source\chapter5\shaders\phong.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

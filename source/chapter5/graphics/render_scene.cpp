@@ -506,7 +506,7 @@ void DebugPass::prepare_draws( RenderScene& scene, FrameGraph* frame_graph, Allo
     {
         BufferCreation creation{ };
         sizet buffer_size = positions.size * sizeof( vec3s );
-        creation.set( VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, ResourceUsageType::Immutable, buffer_size ).set_data( positions.data ).set_name( "debug_sphere_pos" );
+        creation.set( VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, ResourceUsageType::Immutable, u32(buffer_size) ).set_data( positions.data ).set_name( "debug_sphere_pos" );
 
         sphere_mesh_buffer = renderer->create_buffer( creation );
     }
@@ -514,7 +514,7 @@ void DebugPass::prepare_draws( RenderScene& scene, FrameGraph* frame_graph, Allo
     {
         BufferCreation creation{ };
         sizet buffer_size = indices.size * sizeof( u32 );
-        creation.set( VK_BUFFER_USAGE_INDEX_BUFFER_BIT, ResourceUsageType::Immutable, buffer_size ).set_data( indices.data ).set_name( "debug_sphere_indices" );
+        creation.set( VK_BUFFER_USAGE_INDEX_BUFFER_BIT, ResourceUsageType::Immutable, u32(buffer_size) ).set_data( indices.data ).set_name( "debug_sphere_indices" );
 
         sphere_mesh_indices = renderer->create_buffer( creation );
     }

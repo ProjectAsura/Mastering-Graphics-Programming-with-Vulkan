@@ -611,8 +611,8 @@ void FrameGraph::compile() {
 
                     // Resolve texture size if needed
                     if ( info.texture.width == 0 || info.texture.height == 0 ) {
-                        info.texture.width = builder->device->swapchain_width * info.texture.scale_width;
-                        info.texture.height = builder->device->swapchain_height * info.texture.scale_height;
+                        info.texture.width = u32(builder->device->swapchain_width * info.texture.scale_width);
+                        info.texture.height = u32(builder->device->swapchain_height * info.texture.scale_height);
                     }
 
                     TextureFlags::Mask texture_creation_flags = info.texture.compute ? ( TextureFlags::Mask )(TextureFlags::RenderTarget_mask | TextureFlags::Compute_mask) : TextureFlags::RenderTarget_mask;

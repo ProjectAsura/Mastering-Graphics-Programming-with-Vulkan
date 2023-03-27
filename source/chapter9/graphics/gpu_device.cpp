@@ -1477,7 +1477,7 @@ void dump_shader_code( StringBuffer& temp_string_buffer, cstring code, VkShaderS
         }
 
         temp_string_buffer.clear();
-        char* line = temp_string_buffer.append_use_substring( current_code, 0, ( end_of_line - current_code ) );
+        char* line = temp_string_buffer.append_use_substring( current_code, 0u, u32( end_of_line - current_code ) );
         rprint( "%u: %s", line_index++, line );
 
         current_code = end_of_line;
@@ -3449,7 +3449,7 @@ PagePoolHandle GpuDevice::allocate_texture_pool( TextureHandle texture_handle, u
 
     page_pool->block_width = block_width;
     page_pool->block_height = block_height;
-    page_pool->block_size = memory_requirements.alignment; // NOTE(marco): alignment corresponds to block size for sparse textures
+    page_pool->block_size = u32(memory_requirements.alignment); // NOTE(marco): alignment corresponds to block size for sparse textures
     page_pool->used_pages = 0;
     page_pool->free_list = nullptr;
     page_pool->size = pool_size;
@@ -3951,7 +3951,7 @@ void GpuDevice::present( CommandBuffer* async_compute_command_buffer ) {
                     double elapsed_time = range * gpu_timestamp_frequency;
 
                     timestamp.elapsed_ms = elapsed_time;
-                    timestamp.frame_index = absolute_frame;
+                    timestamp.frame_index = u32(absolute_frame);
 
                     //print_format( "%s: %2.3f d(%u) - ", timestamp.name, elapsed_time, timestamp.depth );
                 }

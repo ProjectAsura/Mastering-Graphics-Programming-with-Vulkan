@@ -265,27 +265,27 @@ static void perform_geometric_tests( bool enable_aabb_cubemap_test, raptor::Rend
         u32 res = get_cube_face_mask( cubemap_position, aabb );
         // Positive X
         if ( ( res & 1 ) ) {
-            scene->debug_renderer.aabb( glms_vec3_add( cubemap_position, { 1,0,0 } ), glms_vec3_add( cubemap_position, { 1.2, .2, .2 } ), { Color::get_distinct_color( 0 ) } );
+            scene->debug_renderer.aabb( glms_vec3_add( cubemap_position, { 1,0,0 } ), glms_vec3_add( cubemap_position, { 1.2f, .2f, .2f } ), { Color::get_distinct_color( 0 ) } );
         }
         // Negative X
         if ( ( res & 2 ) ) {
-            scene->debug_renderer.aabb( glms_vec3_add( cubemap_position, { -1,0,0 } ), glms_vec3_add( cubemap_position, { -1.2, -.2, -.2 } ), { Color::get_distinct_color( 1 ) } );
+            scene->debug_renderer.aabb( glms_vec3_add( cubemap_position, { -1,0,0 } ), glms_vec3_add( cubemap_position, { -1.2f, -.2f, -.2f } ), { Color::get_distinct_color( 1 ) } );
         }
         // Positive Y
         if ( ( res & 4 ) ) {
-            scene->debug_renderer.aabb( glms_vec3_add( cubemap_position, { 0,1,0 } ), glms_vec3_add( cubemap_position, { .2, 1.2, .2 } ), { Color::get_distinct_color( 2 ) } );
+            scene->debug_renderer.aabb( glms_vec3_add( cubemap_position, { 0,1,0 } ), glms_vec3_add( cubemap_position, { .2f, 1.2f, .2f } ), { Color::get_distinct_color( 2 ) } );
         }
         // Negative Y
         if ( ( res & 8 ) ) {
-            scene->debug_renderer.aabb( glms_vec3_add( cubemap_position, { 0,-1,0 } ), glms_vec3_add( cubemap_position, { .2, -1.2, .2 } ), { Color::get_distinct_color( 3 ) } );
+            scene->debug_renderer.aabb( glms_vec3_add( cubemap_position, { 0,-1,0 } ), glms_vec3_add( cubemap_position, { .2f, -1.2f, .2f } ), { Color::get_distinct_color( 3 ) } );
         }
         // Positive Z
         if ( ( res & 16 ) ) {
-            scene->debug_renderer.aabb( glms_vec3_add( cubemap_position, { 0,0,1 } ), glms_vec3_add( cubemap_position, { .2, .2, 1.2 } ), { Color::get_distinct_color( 4 ) } );
+            scene->debug_renderer.aabb( glms_vec3_add( cubemap_position, { 0,0,1 } ), glms_vec3_add( cubemap_position, { .2f, .2f, 1.2f } ), { Color::get_distinct_color( 4 ) } );
         }
         // Negative Z
         if ( ( res & 32 ) ) {
-            scene->debug_renderer.aabb( glms_vec3_add( cubemap_position, { 0,0,-1 } ), glms_vec3_add( cubemap_position, { .2, .2, -1.2 } ), { Color::get_distinct_color( 5 ) } );
+            scene->debug_renderer.aabb( glms_vec3_add( cubemap_position, { 0,0,-1 } ), glms_vec3_add( cubemap_position, { .2f, .2f, -1.2f } ), { Color::get_distinct_color( 5 ) } );
         }
         // Draw aabb to test inside cubemap
         scene->debug_renderer.aabb( aabb[ 0 ], aabb[ 1 ], { Color::white } );
@@ -320,8 +320,8 @@ static void perform_geometric_tests( bool enable_aabb_cubemap_test, raptor::Rend
         const u32 z_count = 32;
         const f32 tile_size = 64.0f;
         const f32 tile_pixels = tile_size * tile_size;
-        const u32 tile_x_count = scene_data.resolution_x / f32( tile_size );
-        const u32 tile_y_count = scene_data.resolution_y / f32( tile_size );
+        const u32 tile_x_count = u32(scene_data.resolution_x / f32( tile_size ));
+        const u32 tile_y_count = u32(scene_data.resolution_y / f32( tile_size ));
 
         const f32 tile_radius_sq = ( ( tile_size * 0.5f ) * ( tile_size * 0.5f ) ) * 2;
 
@@ -505,7 +505,7 @@ static void perform_geometric_tests( bool enable_aabb_cubemap_test, raptor::Rend
         lights_aabb_view.shutdown();
 
         if ( enable_light_tile_debug ) {
-            f32 light_pos_len = 0.01;
+            f32 light_pos_len = 0.01f;
             for ( u32 l = 0; l < light_count; ++l ) {
                 Light& light = scene->lights[ l ];
 
@@ -819,12 +819,12 @@ int main( int argc, char** argv ) {
         gpu.vkGetAccelerationStructureBuildSizesKHR( gpu.vulkan_device, VK_ACCELERATION_STRUCTURE_BUILD_TYPE_DEVICE_KHR, &as_info, max_primitives_count.data, &as_size_info );
 
         BufferCreation as_buffer_creation{ };
-        as_buffer_creation.set( VK_BUFFER_USAGE_ACCELERATION_STRUCTURE_STORAGE_BIT_KHR, ResourceUsageType::Immutable, as_size_info.accelerationStructureSize ).set_device_only( true ).set_name( "blas_buffer" );
+        as_buffer_creation.set( VK_BUFFER_USAGE_ACCELERATION_STRUCTURE_STORAGE_BIT_KHR, ResourceUsageType::Immutable, u32(as_size_info.accelerationStructureSize) ).set_device_only( true ).set_name( "blas_buffer" );
         scene->blas_buffer = gpu.create_buffer( as_buffer_creation );
 
         Buffer* blas_buffer = gpu.access_buffer( scene->blas_buffer );
 
-        as_buffer_creation.reset().set( VK_BUFFER_USAGE_STORAGE_BUFFER_BIT | VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT_KHR, ResourceUsageType::Immutable, as_size_info.buildScratchSize ).set_device_only( true ).set_name( "blas_scratch_buffer" );
+        as_buffer_creation.reset().set( VK_BUFFER_USAGE_STORAGE_BUFFER_BIT | VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT_KHR, ResourceUsageType::Immutable, u32(as_size_info.buildScratchSize) ).set_device_only( true ).set_name( "blas_scratch_buffer" );
 
         BufferHandle blas_scratch_buffer_handle = gpu.create_buffer( as_buffer_creation );
 
@@ -880,12 +880,12 @@ int main( int argc, char** argv ) {
 
         gpu.vkGetAccelerationStructureBuildSizesKHR( gpu.vulkan_device, VK_ACCELERATION_STRUCTURE_BUILD_TYPE_DEVICE_KHR, &as_info, &max_instance_count, &as_size_info );
 
-        as_buffer_creation.reset().set( VK_BUFFER_USAGE_ACCELERATION_STRUCTURE_STORAGE_BIT_KHR, ResourceUsageType::Immutable, as_size_info.accelerationStructureSize ).set_device_only( true ).set_name( "tlas_buffer" );
+        as_buffer_creation.reset().set( VK_BUFFER_USAGE_ACCELERATION_STRUCTURE_STORAGE_BIT_KHR, ResourceUsageType::Immutable, u32(as_size_info.accelerationStructureSize) ).set_device_only( true ).set_name( "tlas_buffer" );
         scene->tlas_buffer = gpu.create_buffer( as_buffer_creation );
 
         Buffer* tlas_buffer = gpu.access_buffer( scene->tlas_buffer );
 
-        as_buffer_creation.reset().set( VK_BUFFER_USAGE_STORAGE_BUFFER_BIT | VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT_KHR, ResourceUsageType::Immutable, as_size_info.buildScratchSize ).set_device_only( true ).set_name( "tlas_scratch_buffer" );
+        as_buffer_creation.reset().set( VK_BUFFER_USAGE_STORAGE_BUFFER_BIT | VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT_KHR, ResourceUsageType::Immutable, u32(as_size_info.buildScratchSize) ).set_device_only( true ).set_name( "tlas_scratch_buffer" );
 
         BufferHandle tlas_scratch_buffer_handle = gpu.create_buffer( as_buffer_creation );
 
@@ -1477,7 +1477,7 @@ int main( int argc, char** argv ) {
                 const Light& light = scene->lights[ light_to_debug ];
                 f32 half_radius = light.radius;
                 scene->debug_renderer.aabb( glms_vec3_sub( light.world_position, { half_radius, half_radius ,half_radius } ), glms_vec3_add( light.world_position, { half_radius, half_radius , half_radius } ), { Color::white } );
-                scene->debug_renderer.aabb( glms_vec3_sub( light.world_position, { .1, .1, .1 } ), glms_vec3_add( light.world_position, { .1, .1, .1 } ), { Color::green } );
+                scene->debug_renderer.aabb( glms_vec3_sub( light.world_position, { .1f, .1f, .1f } ), glms_vec3_add( light.world_position, { .1f, .1f, .1f } ), { Color::green } );
             }
         }
 

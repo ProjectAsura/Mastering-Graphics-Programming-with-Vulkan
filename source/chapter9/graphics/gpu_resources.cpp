@@ -306,7 +306,7 @@ DescriptorSetLayoutCreation& DescriptorSetLayoutCreation::add_binding( VkDescrip
 
 DescriptorSetLayoutCreation& DescriptorSetLayoutCreation::add_binding_at_index( const Binding& binding, int index ) {
     bindings[index] = binding;
-    num_bindings = (index + 1) > num_bindings ? (index + 1) : num_bindings;
+    num_bindings = u32(index + 1) > num_bindings ? u32(index + 1) : num_bindings;
     return *this;
 }
 

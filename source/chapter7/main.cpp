@@ -140,9 +140,9 @@ void place_lights( raptor::Array<raptor::Light>& lights, bool grid ) {
         for ( u32 i = 0; i < k_num_lights; ++i ) {
             Light& light = lights[ i ];
 
-            const f32 x = ( i % 4 );
+            const f32 x = f32( i % 4 );
             const f32 y = 0.f;
-            const f32 z = ( i / 4 );
+            const f32 z = f32( i / 4 );
 
             light.world_position = { x, y, z };
             light.intensity = 10.f;
@@ -598,8 +598,8 @@ int main( int argc, char** argv ) {
                 //place_lights( scene->lights, true );
             }
 
-            u32 tile_x_count = scene_data.resolution_x / k_tile_size;
-            u32 tile_y_count = scene_data.resolution_y / k_tile_size;
+            u32 tile_x_count = u32(scene_data.resolution_x / k_tile_size);
+            u32 tile_y_count = u32(scene_data.resolution_y / k_tile_size);
             u32 tiles_entry_count = tile_x_count * tile_y_count * k_num_words;
             u32 buffer_size = tiles_entry_count * sizeof( u32 );
 

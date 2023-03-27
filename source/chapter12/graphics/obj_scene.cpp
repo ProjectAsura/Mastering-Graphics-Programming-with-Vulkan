@@ -363,19 +363,19 @@ void ObjScene::init( cstring filename, cstring path, SceneGraph* scene_graph, Al
             compute_joints( mesh, physics_mesh );
         }
 
-        render_mesh.position_offset = positions_offset;
+        render_mesh.position_offset = u32(positions_offset);
         positions_offset = positions.size * sizeof( vec3s );
 
-        render_mesh.tangent_offset = tangents_offset;
+        render_mesh.tangent_offset = u32(tangents_offset);
         tangents_offset = tangents.size * sizeof( vec3s );
 
-        render_mesh.normal_offset = normals_offset;
+        render_mesh.normal_offset = u32(normals_offset);
         normals_offset = normals.size * sizeof( vec3s );
 
-        render_mesh.texcoord_offset = uv_coords_offset;
+        render_mesh.texcoord_offset = u32(uv_coords_offset);
         uv_coords_offset = uv_coords.size * sizeof( vec2s );
 
-        render_mesh.index_offset = indices_offset;
+        render_mesh.index_offset = u32(indices_offset);
         indices_offset = indices.size * sizeof( u32 );
         render_mesh.index_type = VK_INDEX_TYPE_UINT32;
 
@@ -400,7 +400,7 @@ void ObjScene::init( cstring filename, cstring path, SceneGraph* scene_graph, Al
         {
             BufferCreation creation{ };
             sizet buffer_size = positions.size * sizeof( PhysicsVertexGpuData ) + sizeof( PhysicsMeshGpuData );
-            creation.set( VK_BUFFER_USAGE_TRANSFER_SRC_BIT, ResourceUsageType::Immutable, buffer_size ).set_data( nullptr ).set_name( "physics_mesh_data_cpu" ).set_persistent( true );
+            creation.set( VK_BUFFER_USAGE_TRANSFER_SRC_BIT, ResourceUsageType::Immutable, u32(buffer_size) ).set_data( nullptr ).set_name( "physics_mesh_data_cpu" ).set_persistent( true );
 
             BufferHandle cpu_buffer = renderer->gpu->create_buffer( creation );
 
@@ -443,7 +443,7 @@ void ObjScene::init( cstring filename, cstring path, SceneGraph* scene_graph, Al
                 vertex_data[ vertex_index ] = gpu_data;
             }
 
-            creation.reset().set( VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_STORAGE_BUFFER_BIT, ResourceUsageType::Immutable, buffer_size ).set_device_only( true ).set_name( "physics_mesh_data_gpu" );
+            creation.reset().set( VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_STORAGE_BUFFER_BIT, ResourceUsageType::Immutable, u32(buffer_size) ).set_device_only( true ).set_name( "physics_mesh_data_gpu" );
 
             BufferResource* gpu_buffer = renderer->create_buffer( creation );
             gpu_buffers.push( *gpu_buffer );
@@ -454,11 +454,11 @@ void ObjScene::init( cstring filename, cstring path, SceneGraph* scene_graph, Al
 
             // NOTE(marco): indirect command data
             buffer_size = sizeof( VkDrawIndirectCommand ) * indirect_commands.size;
-            creation.reset().set( VK_BUFFER_USAGE_TRANSFER_SRC_BIT, ResourceUsageType::Immutable, buffer_size ).set_data( indirect_commands.data ).set_name( "indirect_buffer_cpu" );
+            creation.reset().set( VK_BUFFER_USAGE_TRANSFER_SRC_BIT, ResourceUsageType::Immutable, u32(buffer_size) ).set_data( indirect_commands.data ).set_name( "indirect_buffer_cpu" );
 
             cpu_buffer = renderer->gpu->create_buffer( creation );
 
-            creation.reset().set( VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT, ResourceUsageType::Immutable, buffer_size ).set_device_only( true ).set_name( "indirect_buffer_gpu" );
+            creation.reset().set( VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT, ResourceUsageType::Immutable, u32(buffer_size) ).set_device_only( true ).set_name( "indirect_buffer_gpu" );
 
             gpu_buffer = renderer->create_buffer( creation );
             gpu_buffers.push( *gpu_buffer );
@@ -479,11 +479,11 @@ void ObjScene::init( cstring filename, cstring path, SceneGraph* scene_graph, Al
     {
         BufferCreation creation{ };
         sizet buffer_size = positions.size * sizeof( vec3s );
-        creation.set( VK_BUFFER_USAGE_TRANSFER_SRC_BIT, ResourceUsageType::Immutable, buffer_size ).set_data( positions.data ).set_name( "obj_positions" ).set_persistent( true );
+        creation.set( VK_BUFFER_USAGE_TRANSFER_SRC_BIT, ResourceUsageType::Immutable, u32(buffer_size) ).set_data( positions.data ).set_name( "obj_positions" ).set_persistent( true );
 
         BufferHandle cpu_buffer = renderer->gpu->create_buffer( creation );
 
-        creation.reset().set( flags, ResourceUsageType::Immutable, buffer_size ).set_device_only( true ).set_name( "position_attribute_buffer" );
+        creation.reset().set( flags, ResourceUsageType::Immutable, u32(buffer_size) ).set_device_only( true ).set_name( "position_attribute_buffer" );
 
         BufferResource* gpu_buffer = renderer->create_buffer( creation );
         gpu_buffers.push( *gpu_buffer );
@@ -496,11 +496,11 @@ void ObjScene::init( cstring filename, cstring path, SceneGraph* scene_graph, Al
     {
         BufferCreation creation{ };
         sizet buffer_size = tangents.size * sizeof( vec3s );
-        creation.set( VK_BUFFER_USAGE_TRANSFER_SRC_BIT, ResourceUsageType::Immutable, buffer_size ).set_data( tangents.data ).set_name( "obj_tangents" ).set_persistent( true );
+        creation.set( VK_BUFFER_USAGE_TRANSFER_SRC_BIT, ResourceUsageType::Immutable, u32(buffer_size) ).set_data( tangents.data ).set_name( "obj_tangents" ).set_persistent( true );
 
         BufferHandle cpu_buffer = renderer->gpu->create_buffer( creation );
 
-        creation.reset().set( flags, ResourceUsageType::Immutable, buffer_size ).set_device_only( true ).set_name( "tangent_attribute_buffer" );
+        creation.reset().set( flags, ResourceUsageType::Immutable, u32(buffer_size) ).set_device_only( true ).set_name( "tangent_attribute_buffer" );
 
         BufferResource* gpu_buffer = renderer->create_buffer( creation );
         gpu_buffers.push( *gpu_buffer );
@@ -512,11 +512,11 @@ void ObjScene::init( cstring filename, cstring path, SceneGraph* scene_graph, Al
     {
         BufferCreation creation{ };
         sizet buffer_size = normals.size * sizeof( vec3s );
-        creation.set( VK_BUFFER_USAGE_TRANSFER_SRC_BIT, ResourceUsageType::Immutable, buffer_size ).set_data( normals.data ).set_name( "obj_normals" ).set_persistent( true );
+        creation.set( VK_BUFFER_USAGE_TRANSFER_SRC_BIT, ResourceUsageType::Immutable, u32(buffer_size) ).set_data( normals.data ).set_name( "obj_normals" ).set_persistent( true );
 
         BufferHandle cpu_buffer = renderer->gpu->create_buffer( creation );
 
-        creation.reset().set( flags, ResourceUsageType::Immutable, buffer_size ).set_device_only( true ).set_name( "normal_attribute_buffer" );
+        creation.reset().set( flags, ResourceUsageType::Immutable, u32(buffer_size) ).set_device_only( true ).set_name( "normal_attribute_buffer" );
 
         BufferResource* gpu_buffer = renderer->create_buffer( creation );
         gpu_buffers.push( *gpu_buffer );
@@ -528,11 +528,11 @@ void ObjScene::init( cstring filename, cstring path, SceneGraph* scene_graph, Al
     {
         BufferCreation creation{ };
         sizet buffer_size = uv_coords.size * sizeof( vec2s );
-        creation.set( VK_BUFFER_USAGE_TRANSFER_SRC_BIT, ResourceUsageType::Immutable, buffer_size ).set_data( uv_coords.data ).set_name( "obj_tex_coords" );
+        creation.set( VK_BUFFER_USAGE_TRANSFER_SRC_BIT, ResourceUsageType::Immutable, u32(buffer_size) ).set_data( uv_coords.data ).set_name( "obj_tex_coords" );
 
         BufferHandle cpu_buffer = renderer->gpu->create_buffer( creation );
 
-        creation.reset().set( flags, ResourceUsageType::Immutable, buffer_size ).set_device_only( true ).set_name( "texcoords_attribute_buffer" );
+        creation.reset().set( flags, ResourceUsageType::Immutable, u32(buffer_size) ).set_device_only( true ).set_name( "texcoords_attribute_buffer" );
 
         BufferResource* gpu_buffer = renderer->create_buffer( creation );
         gpu_buffers.push( *gpu_buffer );
@@ -544,11 +544,11 @@ void ObjScene::init( cstring filename, cstring path, SceneGraph* scene_graph, Al
     {
         BufferCreation creation{ };
         sizet buffer_size = indices.size * sizeof( u32 );
-        creation.set( VK_BUFFER_USAGE_TRANSFER_SRC_BIT, ResourceUsageType::Immutable, buffer_size ).set_data( indices.data ).set_name( "obj_indices" ).set_persistent( true );
+        creation.set( VK_BUFFER_USAGE_TRANSFER_SRC_BIT, ResourceUsageType::Immutable, u32(buffer_size) ).set_data( indices.data ).set_name( "obj_indices" ).set_persistent( true );
 
         BufferHandle cpu_buffer = renderer->gpu->create_buffer( creation );
 
-        creation.reset().set( flags, ResourceUsageType::Immutable, buffer_size ).set_device_only( true ).set_name( "index_buffer" );
+        creation.reset().set( flags, ResourceUsageType::Immutable, u32(buffer_size) ).set_device_only( true ).set_name( "index_buffer" );
 
         BufferResource* gpu_buffer = renderer->create_buffer( creation );
         gpu_buffers.push( *gpu_buffer );

@@ -535,7 +535,7 @@ bool parse_gpu_pipeline( nlohmann::json& pipeline, raptor::PipelineCreation& pc,
                     FileReadResult frr = file_read_binary( shader_hash_path, temp_allocator );
                     if ( frr.data ) {
 
-                        u32 file_entries = frr.size / sizeof( u64 );
+                        u32 file_entries = u32(frr.size / sizeof( u64 ));
                         if ( file_entries == shader_file_hashes_count ) {
                             u64* cached_file_hashes = ( u64* )frr.data;
                             u32 i = 0;

@@ -419,20 +419,20 @@ void glTFScene::init( cstring filename, cstring path, SceneGraph* scene_graph_, 
             const sizet max_meshlets = meshopt_buildMeshletsBound( indices_accessor.count, max_vertices, max_triangles );
 
             Array<meshopt_Meshlet> local_meshlets;
-            local_meshlets.init( temp_allocator, max_meshlets, max_meshlets );
+            local_meshlets.init( temp_allocator, u32(max_meshlets), u32(max_meshlets) );
 
             Array<u32> meshlet_vertex_indices;
-            meshlet_vertex_indices.init( temp_allocator, max_meshlets * max_vertices, max_meshlets* max_vertices );
+            meshlet_vertex_indices.init( temp_allocator, u32(max_meshlets * max_vertices), u32(max_meshlets* max_vertices) );
 
             Array<u8> meshlet_triangles;
-            meshlet_triangles.init( temp_allocator, max_meshlets * max_triangles * 3, max_meshlets * max_triangles * 3 );
+            meshlet_triangles.init( temp_allocator, u32(max_meshlets * max_triangles * 3), u32(max_meshlets * max_triangles * 3) );
 
             sizet meshlet_count = meshopt_buildMeshlets( local_meshlets.data, meshlet_vertex_indices.data, meshlet_triangles.data, indices,
                                                          indices_accessor.count, vertices, position_buffer_accessor.count, sizeof( vec3s ),
                                                          max_vertices, max_triangles, cone_weight );
 
             u32 meshlet_vertex_offset = meshlets_vertex_positions.size;
-            for ( u32 v = 0; v < position_buffer_accessor.count; ++v ) {
+            for ( u32 v = 0; v < u32(position_buffer_accessor.count); ++v ) {
                 GpuMeshletVertexPosition meshlet_vertex_pos{ };
 
                 f32 x = vertices[ v * 3 + 0 ];
@@ -474,16 +474,16 @@ void glTFScene::init( cstring filename, cstring path, SceneGraph* scene_graph_, 
                 GpuMeshletVertexData meshlet_vertex_data{ };
 
                 if ( normals != nullptr ) {
-                    meshlet_vertex_data.normal[ 0 ] = ( normals[ v * 3 + 0 ] + 1.0f ) * 127.0f;
-                    meshlet_vertex_data.normal[ 1 ] = ( normals[ v * 3 + 1 ] + 1.0f ) * 127.0f;
-                    meshlet_vertex_data.normal[ 2 ] = ( normals[ v * 3 + 2 ] + 1.0f ) * 127.0f;
+                    meshlet_vertex_data.normal[ 0 ] = u8(( normals[ v * 3 + 0 ] + 1.0f ) * 127.0f);
+                    meshlet_vertex_data.normal[ 1 ] = u8(( normals[ v * 3 + 1 ] + 1.0f ) * 127.0f);
+                    meshlet_vertex_data.normal[ 2 ] = u8(( normals[ v * 3 + 2 ] + 1.0f ) * 127.0f);
                 }
 
                 if ( tangents != nullptr ) {
-                    meshlet_vertex_data.tangent[ 0 ] = ( tangents[ v * 3 + 0 ] + 1.0f ) * 127.0f;
-                    meshlet_vertex_data.tangent[ 1 ] = ( tangents[ v * 3 + 1 ] + 1.0f ) * 127.0f;
-                    meshlet_vertex_data.tangent[ 2 ] = ( tangents[ v * 3 + 2 ] + 1.0f ) * 127.0f;
-                    meshlet_vertex_data.tangent[ 3 ] = ( tangents[ v * 3 + 3 ] + 1.0f ) * 127.0f;
+                    meshlet_vertex_data.tangent[ 0 ] = u8(( tangents[ v * 3 + 0 ] + 1.0f ) * 127.0f);
+                    meshlet_vertex_data.tangent[ 1 ] = u8(( tangents[ v * 3 + 1 ] + 1.0f ) * 127.0f);
+                    meshlet_vertex_data.tangent[ 2 ] = u8(( tangents[ v * 3 + 2 ] + 1.0f ) * 127.0f);
+                    meshlet_vertex_data.tangent[ 3 ] = u8(( tangents[ v * 3 + 3 ] + 1.0f ) * 127.0f);
                 }
 
                 meshlet_vertex_data.uv_coords[ 0 ] = meshopt_quantizeHalf( tex_coords[ v * 2 + 0 ] );
@@ -494,11 +494,11 @@ void glTFScene::init( cstring filename, cstring path, SceneGraph* scene_graph_, 
 
             // Cache meshlet offset
             mesh.meshlet_offset = meshlets.size;
-            mesh.meshlet_count = meshlet_count;
+            mesh.meshlet_count = u32(meshlet_count);
             mesh.meshlet_index_count = 0;
 
             // Append meshlet data
-            for ( u32 m = 0; m < meshlet_count; ++m ) {
+            for ( u32 m = 0; m < u32(meshlet_count); ++m ) {
                 meshopt_Meshlet& local_meshlet = local_meshlets[ m ];
 
                 meshopt_Bounds meshlet_bounds = meshopt_computeMeshletBounds(meshlet_vertex_indices.data + local_meshlet.vertex_offset,
@@ -719,7 +719,7 @@ void glTFScene::init( cstring filename, cstring path, SceneGraph* scene_graph_, 
             // Found a skin index, cache it
             mesh_instance.mesh->skin_index = i32_max;
             if ( node.skin != glTF::INVALID_INT_VALUE ) {
-                RASSERT( node.skin < skins.size );
+                RASSERT( u32(node.skin) < skins.size );
 
                 mesh_instance.mesh->skin_index = node.skin;
             }
@@ -734,7 +734,7 @@ void glTFScene::init( cstring filename, cstring path, SceneGraph* scene_graph_, 
 
     sizet geometry_transform_buffer_size = sizeof( VkTransformMatrixKHR ) * meshes.size;
     BufferCreation bc{};
-    bc.set( VK_BUFFER_USAGE_ACCELERATION_STRUCTURE_BUILD_INPUT_READ_ONLY_BIT_KHR | VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT_KHR, ResourceUsageType::Immutable, geometry_transform_buffer_size ).set_persistent( true ).set_name( "geometry_transform_buffer" );
+    bc.set( VK_BUFFER_USAGE_ACCELERATION_STRUCTURE_BUILD_INPUT_READ_ONLY_BIT_KHR | VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT_KHR, ResourceUsageType::Immutable, u32(geometry_transform_buffer_size) ).set_persistent( true ).set_name( "geometry_transform_buffer" );
     geometry_transform_buffer = renderer->gpu->create_buffer( bc );
 
     geometries.init( resident_allocator, mesh_instances.size );
@@ -848,7 +848,7 @@ void glTFScene::init( cstring filename, cstring path, SceneGraph* scene_graph_, 
                 sampler.key_frames.init( resident_allocator, buffer_accessor.count, buffer_accessor.count );
 
                 const f32* key_frames = ( const f32* )buffer_data;
-                for ( u32 i = 0; i < buffer_accessor.count; ++i ) {
+                for ( u32 i = 0; i < u32(buffer_accessor.count); ++i ) {
                     sampler.key_frames[ i ] = key_frames[ i ];
 
                     animation.time_start = glm_min( animation.time_start, key_frames[ i ] );
@@ -874,7 +874,7 @@ void glTFScene::init( cstring filename, cstring path, SceneGraph* scene_graph_, 
                     case glTF::Accessor::Vec3:
                     {
                         const vec3s* animation_data = ( const vec3s* )buffer_data;
-                        for ( u32 i = 0; i < buffer_accessor.count; ++i ) {
+                        for ( u32 i = 0; i < u32(buffer_accessor.count); ++i ) {
                             sampler.data[ i ] = glms_vec4( animation_data[ i ], 0.f );
                         }
                         break;
@@ -882,7 +882,7 @@ void glTFScene::init( cstring filename, cstring path, SceneGraph* scene_graph_, 
                     case glTF::Accessor::Vec4:
                     {
                         const f32* animation_data = ( const f32* )buffer_data;
-                        for ( u32 i = 0; i < buffer_accessor.count; ++i ) {
+                        for ( u32 i = 0; i < u32(buffer_accessor.count); ++i ) {
                             sampler.data[ i ] = vec4s{ animation_data[ i * 4 ], animation_data[ i * 4 + 1 ], animation_data[ i * 4 + 2 ], animation_data[ i * 4 + 3 ] };
                         }
                         break;

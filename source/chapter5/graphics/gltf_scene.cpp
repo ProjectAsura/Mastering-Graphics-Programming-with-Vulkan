@@ -325,7 +325,7 @@ void glTFScene::init( cstring filename, cstring path, Allocator* resident_alloca
                 sampler.key_frames.init( resident_allocator, buffer_accessor.count, buffer_accessor.count );
 
                 const f32* key_frames = ( const f32* )buffer_data;
-                for ( u32 i = 0; i < buffer_accessor.count; ++i ) {
+                for ( u32 i = 0; i < u32(buffer_accessor.count); ++i ) {
                     sampler.key_frames[ i ] = key_frames[ i ];
 
                     animation.time_start = glm_min( animation.time_start, key_frames[ i ] );
@@ -351,7 +351,7 @@ void glTFScene::init( cstring filename, cstring path, Allocator* resident_alloca
                     case glTF::Accessor::Vec3:
                     {
                         const vec3s* animation_data = ( const vec3s* )buffer_data;
-                        for ( u32 i = 0; i < buffer_accessor.count; ++i ) {
+                        for ( u32 i = 0; i < u32(buffer_accessor.count); ++i ) {
                             sampler.data[ i ] = glms_vec4( animation_data[ i ], 0.f );
                         }
                         break;
@@ -359,7 +359,7 @@ void glTFScene::init( cstring filename, cstring path, Allocator* resident_alloca
                     case glTF::Accessor::Vec4:
                     {
                         const f32* animation_data = ( const f32* )buffer_data;
-                        for ( u32 i = 0; i < buffer_accessor.count; ++i ) {
+                        for ( u32 i = 0; i < u32(buffer_accessor.count); ++i ) {
                             sampler.data[ i ] = vec4s{ animation_data[ i * 4 ], animation_data[ i * 4 + 1 ], animation_data[ i * 4 + 2 ], animation_data[ i * 4 + 3 ] };
                         }
                         break;
@@ -648,7 +648,7 @@ void glTFScene::prepare_draws( Renderer* renderer, StackAllocator* scratch_alloc
             // Read skinning data
             mesh.skin_index = i32_max;
             if ( node.skin != glTF::INVALID_INT_VALUE ) {
-                RASSERT( node.skin < skins.size );
+                RASSERT( u32(node.skin) < skins.size );
                 const i32 joints_accessor_index = gltf_get_attribute_accessor_index( mesh_primitive.attributes, mesh_primitive.attribute_count, "JOINTS_0" );
                 const i32 weights_accessor_index = gltf_get_attribute_accessor_index( mesh_primitive.attributes, mesh_primitive.attribute_count, "WEIGHTS_0" );
 

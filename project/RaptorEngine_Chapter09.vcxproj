@@ -13,26 +13,24 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{E3BECE82-218D-40F0-84DD-3D815D6C27B6}</ProjectGuid>
+    <ProjectGuid>{494EA70E-E657-4635-B764-56A98BAB0679}</ProjectGuid>
     <RootNamespace>RaptorEngine</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>RaptorEngine_Chapter3</ProjectName>
+    <ProjectName>RaptorEngine_Chapter09</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
-    <EnableASAN>false</EnableASAN>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <EnableASAN>false</EnableASAN>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -96,9 +94,9 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;RAPTOR_SPV_FOLDER="../source/chapter3/shaders/";RAPTOR_SHADER_FOLDER="../source/chapter3/shaders/";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;RAPTOR_SPV_FOLDER="../source/chapter9/shaders/";RAPTOR_SHADER_FOLDER="../source/chapter9/shaders/";RAPTOR_WORKING_FOLDER="../source/chapter9/";RAPTOR_DATA_FOLDER="../binaries/data/";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../source/raptor;../source;../source/chapter3;$(VULKAN_SDK)/include;../binaries/SDL2-2.0.18/include;../binaries/assimp/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../source/raptor;../source;../source/chapter9;$(VULKAN_SDK)/include;../binaries/SDL2-2.0.18/include;../binaries/assimp/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -107,11 +105,12 @@
       <AdditionalDependencies>assimp-vc142-mt.lib;vulkan-1.lib;sdl2.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>$(VULKAN_SDK)\Bin\glslangValidator.exe -V ../source/chapter3/shaders/main.vert -o ../source/chapter3/shaders/main.vert.spv
-$(VULKAN_SDK)\Bin\glslangValidator.exe -V ../source/chapter3/shaders/main.frag -o ../source/chapter3/shaders/main.frag.spv</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
     <PostBuildEvent>
-      <Message>Build Shaders</Message>
+      <Message>
+      </Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -120,9 +119,9 @@ $(VULKAN_SDK)\Bin\glslangValidator.exe -V ../source/chapter3/shaders/main.frag -
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;RAPTOR_SPV_FOLDER="../source/chapter3/shaders/";RAPTOR_SHADER_FOLDER="../source/chapter3/shaders/";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;RAPTOR_SPV_FOLDER="../source/chapter9/shaders/";RAPTOR_SHADER_FOLDER="../source/chapter9/shaders/";RAPTOR_WORKING_FOLDER="../source/chapter9/";RAPTOR_DATA_FOLDER="../binaries/data/";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../source/raptor;../source;../source/chapter3;$(VULKAN_SDK)/include;../binaries/SDL2-2.0.18/include;../binaries/assimp/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../source/raptor;../source;../source/chapter9;$(VULKAN_SDK)/include;../binaries/SDL2-2.0.18/include;../binaries/assimp/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -134,14 +133,23 @@ $(VULKAN_SDK)\Bin\glslangValidator.exe -V ../source/chapter3/shaders/main.frag -
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\source\chapter3\graphics\command_buffer.hpp" />
-    <ClInclude Include="..\source\chapter3\graphics\gpu_device.hpp" />
-    <ClInclude Include="..\source\chapter3\graphics\gpu_enum.hpp" />
-    <ClInclude Include="..\source\chapter3\graphics\gpu_profiler.hpp" />
-    <ClInclude Include="..\source\chapter3\graphics\gpu_resources.hpp" />
-    <ClInclude Include="..\source\chapter3\graphics\raptor_imgui.hpp" />
-    <ClInclude Include="..\source\chapter3\graphics\renderer.hpp" />
-    <ClInclude Include="..\source\chapter3\graphics\spirv_parser.hpp" />
+    <ClInclude Include="..\source\chapter9\graphics\asynchronous_loader.hpp" />
+    <ClInclude Include="..\source\chapter9\graphics\command_buffer.hpp" />
+    <ClInclude Include="..\source\chapter9\graphics\frame_graph.hpp" />
+    <ClInclude Include="..\source\chapter9\graphics\gltf_scene.hpp" />
+    <ClInclude Include="..\source\chapter9\graphics\gpu_device.hpp" />
+    <ClInclude Include="..\source\chapter9\graphics\gpu_enum.hpp" />
+    <ClInclude Include="..\source\chapter9\graphics\gpu_profiler.hpp" />
+    <ClInclude Include="..\source\chapter9\graphics\gpu_resources.hpp" />
+    <ClInclude Include="..\source\chapter9\graphics\obj_scene.hpp" />
+    <ClInclude Include="..\source\chapter9\graphics\raptor_imgui.hpp" />
+    <ClInclude Include="..\source\chapter9\graphics\renderer.hpp" />
+    <ClInclude Include="..\source\chapter9\graphics\render_resources_loader.hpp" />
+    <ClInclude Include="..\source\chapter9\graphics\render_scene.hpp" />
+    <ClInclude Include="..\source\chapter9\graphics\scene_graph.hpp" />
+    <ClInclude Include="..\source\chapter9\graphics\spirv_parser.hpp" />
+    <ClInclude Include="..\source\chapter9\shaders\mesh.h" />
+    <ClInclude Include="..\source\chapter9\shaders\platform.h" />
     <ClInclude Include="..\source\external\imgui\imconfig.h" />
     <ClInclude Include="..\source\external\imgui\imgui.h" />
     <ClInclude Include="..\source\external\imgui\imgui_impl_sdl.h" />
@@ -152,6 +160,7 @@ $(VULKAN_SDK)\Bin\glslangValidator.exe -V ../source/chapter3/shaders/main.frag -
     <ClInclude Include="..\source\external\imgui\imstb_truetype.h" />
     <ClInclude Include="..\source\external\imgui\stb_image.h" />
     <ClInclude Include="..\source\external\imgui\TextEditor.h" />
+    <ClInclude Include="..\source\external\meshoptimizer\meshoptimizer.h" />
     <ClInclude Include="..\source\raptor\application\application.hpp" />
     <ClInclude Include="..\source\raptor\application\game_application.hpp" />
     <ClInclude Include="..\source\raptor\application\game_camera.hpp" />
@@ -183,16 +192,24 @@ $(VULKAN_SDK)\Bin\glslangValidator.exe -V ../source/chapter3/shaders/main.frag -
     <ClInclude Include="..\source\raptor\foundation\service_manager.hpp" />
     <ClInclude Include="..\source\raptor\foundation\string.hpp" />
     <ClInclude Include="..\source\raptor\foundation\time.hpp" />
+    <ClInclude Include="..\source\raptor\foundation\windows_declarations.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\source\chapter3\graphics\command_buffer.cpp" />
-    <ClCompile Include="..\source\chapter3\graphics\gpu_device.cpp" />
-    <ClCompile Include="..\source\chapter3\graphics\gpu_profiler.cpp" />
-    <ClCompile Include="..\source\chapter3\graphics\gpu_resources.cpp" />
-    <ClCompile Include="..\source\chapter3\graphics\raptor_imgui.cpp" />
-    <ClCompile Include="..\source\chapter3\graphics\renderer.cpp" />
-    <ClCompile Include="..\source\chapter3\graphics\spirv_parser.cpp" />
-    <ClCompile Include="..\source\chapter3\main.cpp" />
+    <ClCompile Include="..\source\chapter9\graphics\asynchronous_loader.cpp" />
+    <ClCompile Include="..\source\chapter9\graphics\command_buffer.cpp" />
+    <ClCompile Include="..\source\chapter9\graphics\frame_graph.cpp" />
+    <ClCompile Include="..\source\chapter9\graphics\gltf_scene.cpp" />
+    <ClCompile Include="..\source\chapter9\graphics\gpu_device.cpp" />
+    <ClCompile Include="..\source\chapter9\graphics\gpu_profiler.cpp" />
+    <ClCompile Include="..\source\chapter9\graphics\gpu_resources.cpp" />
+    <ClCompile Include="..\source\chapter9\graphics\obj_scene.cpp" />
+    <ClCompile Include="..\source\chapter9\graphics\raptor_imgui.cpp" />
+    <ClCompile Include="..\source\chapter9\graphics\renderer.cpp" />
+    <ClCompile Include="..\source\chapter9\graphics\render_resources_loader.cpp" />
+    <ClCompile Include="..\source\chapter9\graphics\render_scene.cpp" />
+    <ClCompile Include="..\source\chapter9\graphics\scene_graph.cpp" />
+    <ClCompile Include="..\source\chapter9\graphics\spirv_parser.cpp" />
+    <ClCompile Include="..\source\chapter9\main.cpp" />
     <ClCompile Include="..\source\external\enkiTS\TaskScheduler.cpp" />
     <ClCompile Include="..\source\external\imgui\imgui.cpp" />
     <ClCompile Include="..\source\external\imgui\imgui_demo.cpp" />
@@ -201,6 +218,21 @@ $(VULKAN_SDK)\Bin\glslangValidator.exe -V ../source/chapter3/shaders/main.frag -
     <ClCompile Include="..\source\external\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\source\external\imgui\imgui_widgets.cpp" />
     <ClCompile Include="..\source\external\imgui\TextEditor.cpp" />
+    <ClCompile Include="..\source\external\meshoptimizer\allocator.cpp" />
+    <ClCompile Include="..\source\external\meshoptimizer\clusterizer.cpp" />
+    <ClCompile Include="..\source\external\meshoptimizer\indexcodec.cpp" />
+    <ClCompile Include="..\source\external\meshoptimizer\indexgenerator.cpp" />
+    <ClCompile Include="..\source\external\meshoptimizer\overdrawanalyzer.cpp" />
+    <ClCompile Include="..\source\external\meshoptimizer\overdrawoptimizer.cpp" />
+    <ClCompile Include="..\source\external\meshoptimizer\simplifier.cpp" />
+    <ClCompile Include="..\source\external\meshoptimizer\spatialorder.cpp" />
+    <ClCompile Include="..\source\external\meshoptimizer\stripifier.cpp" />
+    <ClCompile Include="..\source\external\meshoptimizer\vcacheanalyzer.cpp" />
+    <ClCompile Include="..\source\external\meshoptimizer\vcacheoptimizer.cpp" />
+    <ClCompile Include="..\source\external\meshoptimizer\vertexcodec.cpp" />
+    <ClCompile Include="..\source\external\meshoptimizer\vertexfilter.cpp" />
+    <ClCompile Include="..\source\external\meshoptimizer\vfetchanalyzer.cpp" />
+    <ClCompile Include="..\source\external\meshoptimizer\vfetchoptimizer.cpp" />
     <ClCompile Include="..\source\external\StackWalker.cpp" />
     <ClCompile Include="..\source\external\tlsf.c" />
     <ClCompile Include="..\source\raptor\application\application.cpp" />
@@ -229,8 +261,18 @@ $(VULKAN_SDK)\Bin\glslangValidator.exe -V ../source/chapter3/shaders/main.frag -
     <ClCompile Include="..\source\raptor\foundation\time.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\source\chapter3\shaders\main.frag" />
-    <None Include="..\source\chapter3\shaders\main.vert" />
+    <None Include="..\source\chapter9\shaders\depth.vert" />
+    <None Include="..\source\chapter9\shaders\dof.glsl" />
+    <None Include="..\source\chapter9\shaders\dof.json" />
+    <None Include="..\source\chapter9\shaders\fullscreen.glsl" />
+    <None Include="..\source\chapter9\shaders\fullscreen.json" />
+    <None Include="..\source\chapter9\shaders\gbuffer.glsl" />
+    <None Include="..\source\chapter9\shaders\main.glsl" />
+    <None Include="..\source\chapter9\shaders\main.json" />
+    <None Include="..\source\chapter9\shaders\pbr.glsl" />
+    <None Include="..\source\chapter9\shaders\pbr_lighting.json" />
+    <None Include="..\source\chapter9\shaders\phong.frag" />
+    <None Include="..\source\chapter9\shaders\phong.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
